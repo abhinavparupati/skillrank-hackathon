@@ -49,8 +49,8 @@ cp dashboard_app/backend/.env.example dashboard_app/backend/.env
 ```
 
 ### 4. Prepare Sample Database
-# get the dataset from kaggle as "data.csv" from kaggle E-commerce Sales: https://www.kaggle.com/datasets/carrie1/ecommerce-data
-# running below file produces SQLite database "retail-database.db"
+#### get the dataset from kaggle as "data.csv" from kaggle E-commerce Sales: https://www.kaggle.com/datasets/carrie1/ecommerce-data
+#### running below file produces SQLite database "retail-database.db"
 ```bash
 # Generate sample retail database 
 python data_processor.py
