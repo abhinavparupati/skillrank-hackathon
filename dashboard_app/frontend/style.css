@@ -1,0 +1,290 @@
+/* Custom styles for the Natural Language to SQL Dashboard */
+
+:root {
+    --primary-color: #0066cc;
+    --secondary-color: #f8f9fa;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --dark-color: #343a40;
+    --light-color: #e9ecef;
+}
+
+body {
+    background-color: #f5f7fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar */
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+/* Cards */
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border-radius: 0.5rem;
+    transition: box-shadow 0.15s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid var(--light-color);
+    font-weight: 600;
+}
+
+/* Query Input */
+#question-input {
+    border-radius: 0.5rem 0 0 0.5rem;
+    border-right: none;
+}
+
+#submit-btn {
+    border-radius: 0 0.5rem 0.5rem 0;
+}
+
+/* Suggested Questions */
+.suggested-question {
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border: none;
+    border-bottom: 1px solid var(--light-color);
+}
+
+.suggested-question:hover {
+    background-color: var(--secondary-color);
+}
+
+.suggested-question:last-child {
+    border-bottom: none;
+}
+
+/* KPI Cards */
+.kpi-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    transition: transform 0.2s;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+}
+
+.kpi-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.kpi-label {
+    font-size: 0.875rem;
+    opacity: 0.9;
+}
+
+/* Results Table */
+.results-table {
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.results-table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 0.75rem;
+}
+
+.results-table td {
+    padding: 0.75rem;
+    border-color: var(--light-color);
+}
+
+.results-table tbody tr:hover {
+    background-color: rgba(0, 102, 204, 0.05);
+}
+
+/* Query History */
+.query-history-item {
+    background-color: white;
+    border: 1px solid var(--light-color);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.query-history-item:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 102, 204, 0.2);
+}
+
+.query-text {
+    font-weight: 500;
+    color: var(--dark-color);
+}
+
+.query-sql {
+    font-family: 'Courier New', monospace;
+    font-size: 0.875rem;
+    color: #666;
+    background-color: #f8f9fa;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    margin-top: 0.5rem;
+}
+
+/* Chart containers */
+.chart-container {
+    position: relative;
+    height: 300px;
+    margin-top: 1rem;
+}
+
+/* Status indicator */
+#status-indicator {
+    display: flex;
+    align-items: center;
+}
+
+.status-connected {
+    color: var(--success-color) !important;
+}
+
+.status-disconnected {
+    color: var(--danger-color) !important;
+}
+
+.status-loading {
+    color: var(--warning-color) !important;
+}
+
+/* Loading animations */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.loading-pulse {
+    animation: pulse 1.5s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .chart-container {
+        height: 250px;
+    }
+    
+    .kpi-value {
+        font-size: 1.25rem;
+    }
+    
+    #question-input {
+        margin-bottom: 0.5rem;
+        border-radius: 0.5rem;
+        border-right: 1px solid #ced4da;
+    }
+    
+    #submit-btn {
+        width: 100%;
+        border-radius: 0.5rem;
+    }
+}
+
+/* Error styling */
+.error-message {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.success-message {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Custom scrollbar */
+.card-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.card-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.card-body::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.card-body::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Utility classes */
+.text-truncate-multiline {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.border-primary-subtle {
+    border-color: rgba(0, 102, 204, 0.2) !important;
+}
+
+/* Animation for new results */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in-up {
+    animation: slideInUp 0.3s ease-out;
+}
+
+/* Custom button styles */
+.btn-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+}
+
+.btn-gradient:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

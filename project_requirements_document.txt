@@ -1,0 +1,91 @@
+Project Brief: Natural Language to SQL Dashboard
+
+I. Overall Objective The primary goal is to build an intelligent business dashboard web application that seamlessly converts natural language questions into SQL queries, executes them against a local database, and visualizes the resulting business insights through charts and Key Performance Indicators (KPIs). The application must enable users to ask business questions in plain English and receive LLM-generated SQL queries, with results displayed effectively.
+
+II. Corporate Software Engineering Principles to Adhere To:
+1. Modularity and Separation of Concerns: Design the application with a clear distinction between frontend (user interface), backend (LLM integration, SQL execution, data processing), and database layers.
+2. Data Integrity and Quality: Ensure the data setup involves rigorous downloading, cleaning, and structuring of raw data into a well-defined relational schema.
+3. Robust Error Handling: Implement comprehensive error handling mechanisms for invalid user queries, LLM generation failures, SQL execution errors, and edge cases to ensure graceful degradation and a stable user experience.
+4. User-Centric Design (UX): Prioritize a clear, intuitive, and responsive user interface for asking questions, viewing results, and interacting with visualizations.
+5. Maintainability and Readability: Write clean, well-commented, and modular code to facilitate future enhancements and debugging.
+6. Performance Optimization: Optimize query execution and data rendering for a smooth user experience, especially with real-time data updates.
+
+III. Application Components and Requirements
+A. Core Features (Implement any 3 out of 4):
+1. Natural Language Query Interface:
+    ◦ Provide a text input field where users can type business questions in plain English.
+    ◦ Integrate an LLM to convert these natural language questions into accurate SQL queries.
+    ◦ Execute the generated SQL queries against the database.
+    ◦ Display query results in well-formatted tables.
+    ◦ Example: "Show top 5 customers by revenue" should translate to SQL and display tabular results.
+2. Business KPI Dashboard:
+    ◦ Calculate and display key business metrics such as total revenue, number of orders, and active customers.
+    ◦ Ensure KPIs reflect real-time data from the database.
+    ◦ Present KPIs using visual cards, potentially including trend indicators.
+    ◦ Implement auto-refresh functionality for dashboard data.
+3. Interactive Data Visualization:
+    ◦ Generate various chart types (e.g., bar, line, pie charts) directly from SQL query results.
+    ◦ Support visualizations for key insights like sales trends, product performance, and customer analytics.
+    ◦ Allow users to export chart data and insights.
+4. Smart Query Management (Optional, if chosen as one of the three features):
+    ◦ Enable users to save successful queries for future reuse.
+    ◦ Provide pre-built business question templates.
+    ◦ Implement query history and performance tracking.
+    ◦ (Advanced) Offer LLM-suggested follow-up questions based on current results.
+
+B. Technical Requirements:
+1. Frontend:
+    ◦ Develop a responsive query interface for natural language input.
+    ◦ Build the dashboard layout for displaying KPIs.
+    ◦ Implement chart visualization capabilities.
+    ◦ Technology choice is flexible (e.g., React, Vue, Angular, or plain HTML/CSS/JS).
+2. Backend:
+    ◦ Develop an API layer responsible for LLM integration (sending natural language, receiving SQL).
+    ◦ Handle SQL query execution against the database.
+    ◦ Perform data processing as needed before sending to the frontend.
+    ◦ Technology choice is flexible (e.g., Python with Flask/Django, Node.js with Express).
+3. Database:
+    ◦ Use SQLite as the database system.
+    ◦ The database must contain the business data from Kaggle datasets.
+4. LLM Integration:
+    ◦ Integrate with any chosen LLM API (e.g., OpenAI, Anthropic, Google, Hugging Face, or a local model) for natural language to SQL conversion.
+
+C. Data Setup Challenge:
+1. Data Sourcing:
+    ◦ Download relevant datasets from Kaggle:
+        ▪ E-commerce Sales: https://www.kaggle.com/datasets/carrie1/ecommerce-data
+        ▪ Retail Dataset: https://www.kaggle.com/datasets/mohammadtalib786/retail-sales-dataset
+        ▪ Customer Data: https://www.kaggle.com/datasets/jackdaoud/marketing-data
+2. Data Cleaning and Structuring:
+    ◦ Clean and pre-process the downloaded Kaggle data.
+    ◦ Import the cleaned data into SQLite, structuring it into the following tables with the specified schemas:
+        ▪ customers: id, name, email, city, signup_date
+        ▪ products: id, name, category, price, stock
+        ▪ orders: id, customer_id, product_id, quantity, order_date, total
+        ▪ sales: id, order_id, revenue, profit_margin, sales_date
+    ◦ Crucial Success Factor: Data quality and a well-structured database are essential for accurate query generation and insights.
+
+IV. Success Criteria
+The application will be considered successful if:
+• Users can ask business questions effectively in natural language.
+• The LLM generates accurate SQL queries from the natural language questions.
+• The dashboard displays meaningful KPIs with real data.
+• Charts visualize data insights effectively.
+• Query results are accurate and well-formatted.
+
+V. Critical Success Factors (Priorities for Implementation Quality)
+1. Data Quality: Ensure the underlying database is clean, consistent, and well-structured. This is paramount for the accuracy of LLM-generated SQL and derived insights.
+2. LLM Prompting: Craft precise and effective prompts for the LLM to ensure accurate SQL query generation. This requires iterative refinement.
+3. Error Handling: Implement robust mechanisms to handle invalid queries, unexpected data, and edge cases gracefully, providing informative feedback to the user.
+4. User Experience (UX): Design a clear, intuitive, and easy-to-use interface for asking questions and viewing the results and visualizations.
+
+VI. Prioritization Guidance
+• Focus initially on establishing the fundamental Natural Language to SQL conversion and query execution functionality. Ensure this core feature is robust before investing heavily in advanced features like detailed KPI trend indicators or complex visualizations.
+
+VII. Example Questions to Support
+The application should be capable of handling queries such as:
+• "Show me total sales this year"
+• "Which products sold the most?"
+• "Who are our top 10 customers by revenue?"
+• "What's the monthly sales trend?"
+• "Which product category is most profitable?"
