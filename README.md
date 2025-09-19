@@ -1,23 +1,111 @@
-# Retail Data Processing - Project Summary
+# Natural Language to SQL Dashboard
 
-## Overview
-Successfully converted the raw CSV transaction data into a clean, normalized SQLite database with four well-structured tables as requested.
+## 🚀 Overview
+A full-stack web application that allows users to query retail data using natural language. The system converts English questions into SQL queries using GitHub Models LLM and displays results with intelligent data visualizations.
 
-## Data Transformation Summary
+## ✨ Features
+- **Natural Language Queries**: Ask questions in plain English
+- **Smart SQL Generation**: LLM-powered query conversion with fallback patterns
+- **Interactive Visualizations**: Automatic chart generation with Chart.js
+- **Real-time Analytics**: KPI calculations and trend analysis
+- **Responsive Design**: Bootstrap-powered UI that works on all devices
+- **Error Handling**: Comprehensive error management and user feedback
 
-### Source Data
-- **File**: `data.csv`
-- **Original Records**: 541,909 transactions
-- **Data Range**: December 2010 - December 2011
-- **Format**: Transaction-level retail data
+## 🛠️ Post-Clone Setup Instructions
 
-### Data Cleaning Applied
-- Removed 135,080 records with missing Customer IDs (B2B transactions)
-- Removed 10,624 cancelled orders (negative quantities)
-- Removed 2,517 records with invalid prices (≤ 0)
-- **Final Clean Dataset**: 397,884 valid transactions
+### Prerequisites
+- Python 3.8+ installed
+- Git installed
+- GitHub Personal Access Token (for LLM features)
 
-## Database Schema
+### 1. Clone and Navigate
+```bash
+git clone https://github.com/abhinavparupati/skillrank-hackathon.git
+cd skillrank-hackathon
+```
+
+### 2. Set Up Python Environment
+```bash
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+# On Windows:
+.venv\Scripts\activate
+# On macOS/Linux:
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r dashboard_app/requirements.txt
+```
+
+### 3. Configure Environment Variables
+```bash
+# Copy environment template
+cp dashboard_app/backend/.env.example dashboard_app/backend/.env
+
+# Edit .env file and add your GitHub token:
+# GITHUB_TOKEN=your_actual_github_token_here
+```
+
+### 4. Prepare Sample Database
+```bash
+# Generate sample retail database (optional - for testing)
+python data_processor.py
+```
+
+### 5. Start the Backend Server
+```bash
+cd dashboard_app/backend
+python app.py
+```
+Backend will run at: `http://localhost:5000`
+
+### 6. Start the Frontend Server
+Open a new terminal:
+```bash
+cd dashboard_app/frontend
+python -m http.server 3000
+```
+Frontend will run at: `http://localhost:3000`
+
+### 7. Access the Application
+Open your browser and navigate to: `http://localhost:3000`
+
+## 🎯 Usage Examples
+
+### Natural Language Queries
+Try these example questions:
+- "Show me total sales by month"
+- "What are the top 5 customers by revenue?"
+- "Which products sell the most?"
+- "Show sales trends over time"
+- "What's the average order value?"
+
+### API Endpoints
+- `POST /api/query` - Natural language to SQL conversion
+- `GET /api/kpis` - Key performance indicators
+- `GET /api/chart-data` - Chart visualization data
+
+## 🏗️ Architecture
+
+### Backend (`dashboard_app/backend/`)
+- **`app.py`** - Main Flask application with REST API
+- **`services/`** - Business logic modules
+  - `database_service.py` - Database operations
+  - `llm_service.py` - GitHub Models LLM integration
+- **`utils/`** - Helper utilities
+  - `response_formatter.py` - API response formatting
+  - `error_handler.py` - Error handling and logging
+
+### Frontend (`dashboard_app/frontend/`)
+- **`index.html`** - Main application interface
+- **`script.js`** - Interactive functionality and API calls
+- **`style.css`** - Responsive styling with Bootstrap
+
+## 📊 Database Schema
+
+The application works with a normalized retail database:
 
 ### 1. Customers Table
 ```sql
@@ -71,83 +159,86 @@ CREATE TABLE sales (
 ```
 **Records**: 397,884 sales records
 
-## Data Quality Features
+## 🔧 Development
 
-### ✅ Data Integrity
-- All foreign key relationships validated (0 orphaned records)
-- No duplicate primary keys
-- No null values in required fields
-- Proper data types and constraints
-
-### ✅ Business Logic
-- **Product Categories**: 11 logical categories derived from descriptions
-- **Customer Names**: Realistic names generated deterministically
-- **Email Addresses**: Unique emails following realistic patterns
-- **Profit Margins**: Realistic margins (15-45%) simulated
-- **Stock Levels**: Estimated based on sales velocity
-
-### ✅ Analytics Ready
-- Proper indexes for query performance
-- Normalized schema for efficient joins
-- Date fields for time-series analysis
-- Categories for product analysis
-
-## Key Statistics
-
-| Metric | Value |
-|--------|--------|
-| **Total Revenue** | £8,911,407.90 |
-| **Average Order Value** | £22.40 |
-| **Top Category** | General Merchandise (53% of sales) |
-| **Date Range** | Dec 2010 - Dec 2011 |
-| **Countries** | 37 different countries |
-| **Top Customer Spend** | £280,206 (Michael Taylor) |
-
-## Files Created
-
-1. **`data_analysis.py`** - Initial data exploration and quality assessment
-2. **`data_processor.py`** - Complete ETL pipeline for data transformation
-3. **`database_inspector.py`** - Database validation and sample queries
-4. **`retail_database.db`** - Final SQLite database with normalized tables
-
-## Usage Examples
-
-### Connect to Database
+### Adding New Query Patterns
+Edit `dashboard_app/backend/services/llm_service.py` to add new fallback patterns:
 ```python
-import sqlite3
-conn = sqlite3.connect('retail_database.db')
+QUERY_PATTERNS = {
+    'your_pattern': 'SELECT * FROM your_table WHERE condition;'
+}
 ```
 
-### Sample Queries
-```sql
--- Top customers by revenue
-SELECT c.name, SUM(o.total) as revenue
-FROM customers c
-JOIN orders o ON c.id = o.customer_id
-GROUP BY c.id
-ORDER BY revenue DESC;
-
--- Sales by category
-SELECT p.category, SUM(o.total) as revenue
-FROM products p
-JOIN orders o ON p.id = o.product_id
-GROUP BY p.category
-ORDER BY revenue DESC;
-
--- Monthly sales trends
-SELECT strftime('%Y-%m', order_date) as month, 
-       COUNT(*) as orders, SUM(total) as revenue
-FROM orders
-GROUP BY month
-ORDER BY month;
+### Extending Visualizations
+Modify `dashboard_app/frontend/script.js` to add new chart types:
+```javascript
+function createCustomChart(data) {
+    // Your chart implementation
+}
 ```
 
-## Success Criteria Met
+### Environment Variables
+- `GITHUB_TOKEN` - GitHub Models API token (required)
+- `DATABASE_PATH` - Path to SQLite database
+- `FLASK_ENV` - Development/production mode
+- `API_HOST` - Backend host (default: 0.0.0.0)
+- `API_PORT` - Backend port (default: 5000)
 
-✅ **Clean Data**: All invalid records removed, consistent formatting
-✅ **Normalized Structure**: Four properly related tables
-✅ **Data Quality**: No orphaned records, all relationships valid
-✅ **SQLite Import**: All data successfully loaded with constraints
-✅ **Analytics Ready**: Indexed and optimized for queries
+## 🛡️ Security Features
+- Environment variable protection (`.env` excluded from git)
+- Input validation and SQL injection prevention
+- Error handling without data exposure
+- Secure API token management
 
-The database is now ready for business intelligence, reporting, and analytics applications!
+## 📁 Project Structure
+```
+skillrank-hackathon/
+├── dashboard_app/
+│   ├── backend/
+│   │   ├── services/
+│   │   ├── utils/
+│   │   ├── app.py
+│   │   ├── requirements.txt
+│   │   └── .env.example
+│   ├── frontend/
+│   │   ├── index.html
+│   │   ├── script.js
+│   │   └── style.css
+│   └── README.md
+├── data_processor.py
+├── database_inspector.py
+├── .gitignore
+└── README.md
+```
+
+## 🚀 Deployment
+
+### Local Development
+Follow the setup instructions above.
+
+### Production Deployment
+1. Set `FLASK_ENV=production` in `.env`
+2. Use a production WSGI server (gunicorn)
+3. Configure reverse proxy (nginx)
+4. Set up SSL certificates
+
+## 🤝 Contributing
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📝 License
+This project is available for educational and demonstration purposes.
+
+This project demonstrates:
+- ✅ **Full-Stack Development**: Flask backend + JavaScript frontend
+- ✅ **AI Integration**: GitHub Models LLM for natural language processing
+- ✅ **Data Visualization**: Interactive charts with automatic axis detection
+- ✅ **Clean Architecture**: Modular design with separation of concerns
+- ✅ **Error Handling**: Comprehensive fallback systems and user feedback
+- ✅ **Security**: Proper secret management and input validation
+- ✅ **Software Engineering**: Git workflow, documentation, and best practices
+
+Built with modern web technologies and AI-powered natural language understanding!
